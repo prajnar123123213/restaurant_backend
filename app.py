@@ -15,22 +15,57 @@ def get_data():
 
     # add a row to list, an Info record
     InfoDb.append({
-        "FirstName": "John",
-        "LastName": "Mortensen",
-        "DOB": "October 21",
+        "FirstName": "Zoe",
+        "LastName": "He",
+        "DOB": "April 11",
         "Residence": "San Diego",
-        "Email": "jmortensen@powayusd.com",
-        "Owns_Cars": ["2015-Fusion", "2011-Ranger", "2003-Excursion", "1997-F350", "1969-Cadillac"]
+        "Email": "zoeqinhe@gmail.com",
+        # "Owns_Cars": ["2015-Fusion", "2011-Ranger", "2003-Excursion", "1997-F350", "1969-Cadillac"]
     })
-
     # add a row to list, an Info record
     InfoDb.append({
-        "FirstName": "Shane",
+        "FirstName": "Claire",
+        "LastName": "Lee",
+        "DOB": "March 15",
+        "Residence": "Los Angeles",
+        "Email": "clairelee@example.com",
+        # "Owns_Cars": ["2018-Civic", "2016-Accord"]
+    })
+    # add a row to list, an Info record
+    InfoDb.append({
+        "FirstName": "Prajna",
+        "LastName": "Lee",
+        "DOB": "March 15",
+        "Residence": "Los Angeles",
+        "Email": "clairelee@example.com",
+        # "Owns_Cars": ["2018-Civic", "2016-Accord"]
+    })
+    # add a row to list, an Info record
+    InfoDb.append({
+        "FirstName": "Arshia",
+        "LastName": "Lee",
+        "DOB": "March 15",
+        "Residence": "Los Angeles",
+        "Email": "clairelee@example.com",
+        #"Owns_Cars": ["2018-Civic", "2016-Accord"]
+    })
+    # add a row to list, an Info record
+    InfoDb.append({
+        "FirstName": "Mirabelle",
         "LastName": "Lopez",
         "DOB": "February 27",
         "Residence": "San Diego",
         "Email": "slopez@powayusd.com",
-        "Owns_Cars": ["2021-Insight"]
+        # "Owns_Cars": ["2021-Insight"]
+    })
+    # add a row to list, an Info record
+    InfoDb.append({
+        "FirstName": "Sanya",
+        "LastName": "Kapoor",
+        "DOB": "March 15",
+        "Residence": "Los Angeles",
+        "Email": "clairelee@example.com",
+        # "Owns_Cars": ["2018-Civic", "2016-Accord"]
     })
     
     return jsonify(InfoDb)
