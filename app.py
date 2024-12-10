@@ -18,6 +18,7 @@ def get_data():
         "FirstName": "Zoe",
         "LastName": "He",
         "DOB": "April 11",
+        "Role": "Developer",
         "Residence": "San Diego",
         "Email": "zoeqinhe@gmail.com",
         # "Owns_Cars": ["2015-Fusion", "2011-Ranger", "2003-Excursion", "1997-F350", "1969-Cadillac"]
@@ -27,6 +28,7 @@ def get_data():
         "FirstName": "Claire",
         "LastName": "Lee",
         "DOB": "March 15",
+        "Role": "Developer",
         "Residence": "Los Angeles",
         "Email": "clairelee@example.com",
         # "Owns_Cars": ["2018-Civic", "2016-Accord"]
@@ -34,8 +36,9 @@ def get_data():
     # add a row to list, an Info record
     InfoDb.append({
         "FirstName": "Prajna",
-        "LastName": "Lee",
+        "LastName": "Raj",
         "DOB": "March 15",
+        "Role": "Assistant Scrum",
         "Residence": "Los Angeles",
         "Email": "clairelee@example.com",
         # "Owns_Cars": ["2018-Civic", "2016-Accord"]
@@ -43,7 +46,8 @@ def get_data():
     # add a row to list, an Info record
     InfoDb.append({
         "FirstName": "Arshia",
-        "LastName": "Lee",
+        "LastName": "Deb Roy",
+        "Role": "Scrum",
         "DOB": "March 15",
         "Residence": "Los Angeles",
         "Email": "clairelee@example.com",
@@ -52,7 +56,8 @@ def get_data():
     # add a row to list, an Info record
     InfoDb.append({
         "FirstName": "Mirabelle",
-        "LastName": "Lopez",
+        "LastName": "Andersen",
+        "Role": "Integrator",
         "DOB": "February 27",
         "Residence": "San Diego",
         "Email": "slopez@powayusd.com",
@@ -62,6 +67,7 @@ def get_data():
     InfoDb.append({
         "FirstName": "Sanya",
         "LastName": "Kapoor",
+        "Role": "Developer",
         "DOB": "March 15",
         "Residence": "Los Angeles",
         "Email": "clairelee@example.com",
