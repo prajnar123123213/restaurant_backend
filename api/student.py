@@ -26,25 +26,25 @@ class StudentAPI:
                 "name": "Zoe",
                 "age": "16",
                 "role": "Devloper",
-                "school":"del Norte"
+                "school":"Del Norte"
             },
              "Sanya": {
                 "name": "Sanya",
                 "age": "16",
                 "role": "Devloper",
-                "school":"del Norte"
+                "school":"Del Norte"
             },
               "Mirabelle": {
                 "name": "Mirabelle",
                 "age": "17",
                 "role": "Integrator",
-                "school":"del Norte"
+                "school":"Del Norte"
             },
                "Claire": {
                 "name": "Claire",
                 "age": "16",
                 "role": "Devloper",
-                "school":"del Norte"
+                "school":"Del Norte"
             },
             
         }
