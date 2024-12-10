@@ -25,13 +25,13 @@ class StudentAPI:
             "Zoe": {
                 "name": "Zoe",
                 "age": "16",
-                "role": "Devloper",
+                "role": "Developer",
                 "school":"Del Norte"
             },
              "Sanya": {
                 "name": "Sanya",
                 "age": "16",
-                "role": "Devloper",
+                "role": "Developer",
                 "school":"Del Norte"
             },
               "Mirabelle": {
@@ -43,7 +43,7 @@ class StudentAPI:
                "Claire": {
                 "name": "Claire",
                 "age": "16",
-                "role": "Devloper",
+                "role": "Developer",
                 "school":"Del Norte"
             },
             
