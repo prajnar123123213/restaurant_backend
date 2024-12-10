@@ -14,7 +14,7 @@ class StudentAPI:
                 "name": "Arshia",
                 "age": 16,
                 "role": "Scrum",
-                "university": "Del Norte"
+                "school": "Del Norte"
             },
             "Prajna": {
                 "name": "Prajna",
