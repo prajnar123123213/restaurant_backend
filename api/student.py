@@ -12,26 +12,26 @@ class StudentAPI:
         students = {
             "Arshia": {
                 "name": "Arshia",
-                "age": 16,
+                "age": "16",
                 "role": "Scrum",
-                "school": "Del Norte"
+                "school": "Del Norte High School"
             },
             "Prajna": {
                 "name": "Prajna",
-                "age": 16,
+                "age": "16",
                 "role": "Assistant Scrum",
                 "school": "Del Norte"
             },
             "Zoe": {
                 "name": "Zoe",
                 "age": "16",
-                "role": "Developer",
+                "role": "Devloper",
                 "school":"Del Norte"
             },
              "Sanya": {
                 "name": "Sanya",
                 "age": "16",
-                "role": "Developer",
+                "role": "Devloper",
                 "school":"Del Norte"
             },
               "Mirabelle": {
@@ -43,12 +43,12 @@ class StudentAPI:
                "Claire": {
                 "name": "Claire",
                 "age": "16",
-                "role": "Developer",
+                "role": "Devloper",
                 "school":"Del Norte"
             },
             
         }
-        return students.get(name)
+        return students.get(name) 
 
     class _Arshia(Resource):
         def get(self):
