@@ -42,7 +42,7 @@ class ArgentinaAPI:
             return jsonify({"restaurant": [theargentinianexperience_details, Mercado_details]})
 
     # Building REST API endpoints
-    api.add_resource(_theArgentinianExperience, '/restaurant/theArgentinianExperience')
+    api.add_resource(_theArgentinianExperience, '/restaurant/theargentinianexperience')
     api.add_resource(_Mercado, '/restaurant/mercado')
     api.add_resource(_Bulk, '/restaurant')
 
