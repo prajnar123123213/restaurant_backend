@@ -10,11 +10,11 @@ class ChinaAPI:
     @staticmethod
     def get_food(name):
         food = {
-            "West_Lake_Restaurant": {
+            "West Lake Restaurant": {
                 "name": "West_Lake_Restaurant",
                 "location": "China",
             },
-            "Silk_Road_Cuisine": {
+            "Silk Road Cuisine": {
                 "name": "Silk_Road_Cuisine",
                 "location": "China",
             },              
@@ -37,7 +37,7 @@ class ChinaAPI:
         def get(self):
             # Use the helper method to get both John's and Jeff's details
             West_Lake_Restaurant_details = ChinaAPI.get_food("West_Lake_Restaurant")
-            Silk_Road_Cuisine_details = ChinaAPI.get_food("Silk_Road_Cuisine_details")
+            Silk_Road_Cuisine_details = ChinaAPI.get_food("Silk_Road_Cuisine")
             return jsonify({"food": [West_Lake_Restaurant_details, Silk_Road_Cuisine_details]})
 
     # Building REST API endpoints
