@@ -41,7 +41,7 @@ class sandiegoAPI:
         def get(self):
             # Use the helper method to get Jeff's details
             Herb_details = sandiegoAPI.get_food("Herb & Wood")
-            return jsonify(Unity_details)
+            return jsonify(Herb_details)
         
     class _Bulk(Resource):
         def get(self):
