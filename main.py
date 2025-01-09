@@ -33,6 +33,7 @@ from api.japan import japan_api
 from api.india import india_api
 from api.brazil import brazil_api
 from api.peru import peru_api
+from api.argentina import argentina_api
 
 from api.vote import vote_api
 # database Initialization functions
@@ -64,6 +65,7 @@ app.register_blueprint(japan_api)
 app.register_blueprint(india_api)
 app.register_blueprint(brazil_api)
 app.register_blueprint(peru_api)
+app.register_blueprint(argentina_api)
 
 # Added new files to create nestPosts, uses a different format than Mortensen and didn't want to touch his junk
 app.register_blueprint(nestPost_api)
