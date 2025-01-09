@@ -1,37 +1,37 @@
 from flask import Blueprint, jsonify
 from flask_restful import Api, Resource
 
-india_api = Blueprint('india_api', __name__, url_prefix='/api')
+japan_api = Blueprint('japan_api', __name__, url_prefix='/api')
 
 # API docs https://flask-restful.readthedocs.io/en/latest/api.html
-api = Api(india_api)
+api = Api(japan_api)
 
-class IndiaAPI:
+class JapanAPI:
     @staticmethod
     def get_food(name):
         food = {
-            "Indian_Accent": {
-                "name": "Indian_Accent",
-                "location": "India",
+            "Hakumarut": {
+                "name": "Hakumaru",
+                "location": "Japan",
             },             
         }
         return food.get(name)
     
-    class _Indian_Accent(Resource):
+    class _Hakumaru(Resource):
         def get(self):
             # Use the helper method to get Jeff's details
-            Indian_Accent_details = IndiaAPI.get_food("Indian_Accent")
-            return jsonify(Indian_Accent_details)
+            Hakumaru_details = JapanAPI.get_food("Hakumaru")
+            return jsonify(Hakumaru_details)
         
     class _Bulk(Resource):
         def get(self):
             # Use the helper method to get both John's and Jeff's details
-            Indian_Accent_details = IndiaAPI.get_food("Indian_Accent")
-            return jsonify({"food": [Indian_Accent_details]})
+            Hakumaru_details =JapanAPI.get_food("Hakumaru")
+            return jsonify({"food": [Hakumaru_details]})
 
     # Building REST API endpoints
-    api.add_resource(_Indian_Accent, '/food/indian_accent')
+    api.add_resource(_Hakumaru, '/food/hakumaru')
     api.add_resource(_Bulk, '/food')
 
 # Instantiate the StudentAPI to register the endpoints
-india_api_instance = IndiaAPI()
+japan_api_instance = JapanAPI()
