@@ -26,6 +26,7 @@ from api.carphoto import car_api
 from api.carChat import car_chat_api
 from api.student import student_api
 from api.africa import africa_api
+from api.ethiopia import ethiopia_api
 
 from api.vote import vote_api
 # database Initialization functions
@@ -50,6 +51,7 @@ app.register_blueprint(section_api)
 app.register_blueprint(car_chat_api)
 app.register_blueprint(student_api)
 app.register_blueprint(africa_api)
+app.register_blueprint(ethiopia_api)
 
 # Added new files to create nestPosts, uses a different format than Mortensen and didn't want to touch his junk
 app.register_blueprint(nestPost_api)
