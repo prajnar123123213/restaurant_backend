@@ -20,7 +20,7 @@ class Japan(db.Model):
         _content (db.Column): A JSON blob representing the content of the post.
         _user_id (db.Column): An integer representing the user who created the post.
     """
-    __tablename__ = 'janpans'
+    __tablename__ = 'japans'
 
     id = db.Column(db.Integer, primary_key=True)
     _title = db.Column(db.String(255), nullable=False)
