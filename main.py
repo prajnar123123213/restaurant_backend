@@ -36,6 +36,7 @@ from api.brazil import brazil_api
 from api.peru import peru_api
 from api.argentina import argentina_api
 from api.chile import chile_api
+from api.southafrica import southafrica_api
 
 from api.vote import vote_api
 # database Initialization functions
@@ -48,6 +49,7 @@ from model.post import Post, initPosts
 from model.sandiego import Sandiego, initSandiegos
 from model.japan import Japan, initJapans
 from model.nigeria import Nigeria, initNigerias
+from model.southafrica import Southafrica, initSouthafricas
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
 # server only Views
@@ -73,6 +75,7 @@ app.register_blueprint(peru_api)
 app.register_blueprint(argentina_api)
 app.register_blueprint(chile_api)
 app.register_blueprint(sandiego_api)
+app.register_blueprint(southafrica_api)
 
 # Added new files to create nestPosts, uses a different format than Mortensen and didn't want to touch his junk
 app.register_blueprint(nestPost_api)
@@ -187,6 +190,7 @@ def generate_data():
     initSandiegos()
     initJapans()
     initNigerias()
+    initSouthafricas()
     initNestPosts()
     initVotes()
     
@@ -213,6 +217,7 @@ def extract_data():
         data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
         data['japans'] = [japan.read() for japan in Japan.query.all()]
         data['nigerias'] = [nigeria.read() for nigeria in Nigeria.query.all()]
+        data['southafricas'] = [southafrica.read() for southafrica in Southafrica.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -227,7 +232,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias']:
+    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias', 'southafricas']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
@@ -243,6 +248,7 @@ def restore_data(data):
         _ = Sandiego.restore(data['sandiegos'])
         _ = Japan.restore(data['japans'])
         _ = Nigeria.restore(data['nigerias'])
+        _ = Southafrica.restore(data['southafricas'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
