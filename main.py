@@ -17,7 +17,6 @@ from api.user import user_api
 from api.pfp import pfp_api
 from api.nestImg import nestImg_api # Justin added this, custom format for his website
 from api.post import post_api
-from api.sandiego import sandiego_api
 from api.channel import channel_api
 from api.group import group_api
 from api.section import section_api
@@ -45,7 +44,6 @@ from model.section import Section, initSections
 from model.group import Group, initGroups
 from model.channel import Channel, initChannels
 from model.post import Post, initPosts
-from model.sandiego import Sandiego, initSandiegos
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
 # server only Views
@@ -56,8 +54,8 @@ app.register_blueprint(user_api)
 app.register_blueprint(pfp_api) 
 app.register_blueprint(post_api)
 app.register_blueprint(channel_api)
-app.register_blueprint(section_api)
 app.register_blueprint(group_api)
+app.register_blueprint(section_api)
 app.register_blueprint(car_chat_api)
 app.register_blueprint(student_api)
 app.register_blueprint(africa_api)
@@ -70,7 +68,6 @@ app.register_blueprint(brazil_api)
 app.register_blueprint(peru_api)
 app.register_blueprint(argentina_api)
 app.register_blueprint(chile_api)
-app.register_blueprint(sandiego_api)
 
 # Added new files to create nestPosts, uses a different format than Mortensen and didn't want to touch his junk
 app.register_blueprint(nestPost_api)
@@ -182,7 +179,6 @@ def generate_data():
     initGroups()
     initChannels()
     initPosts()
-    initSandiegos()
     initNestPosts()
     initVotes()
     
@@ -206,7 +202,6 @@ def extract_data():
         data['groups'] = [group.read() for group in Group.query.all()]
         data['channels'] = [channel.read() for channel in Channel.query.all()]
         data['posts'] = [post.read() for post in Post.query.all()]
-        data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -221,7 +216,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos']:
+    for table in ['users', 'sections', 'groups', 'channels', 'posts']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
@@ -234,7 +229,6 @@ def restore_data(data):
         _ = Group.restore(data['groups'], users)
         _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
-        _ = Sandiego.restore(data['sandiegos'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
