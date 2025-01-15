@@ -47,6 +47,7 @@ from model.channel import Channel, initChannels
 from model.post import Post, initPosts
 from model.sandiego import Sandiego, initSandiegos
 from model.japan import Japan, initJapans
+from model.nigeria import Nigeria, initNigerias
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
 # server only Views
@@ -185,6 +186,7 @@ def generate_data():
     initPosts()
     initSandiegos()
     initJapans()
+    initNigerias()
     initNestPosts()
     initVotes()
     
@@ -210,6 +212,7 @@ def extract_data():
         data['posts'] = [post.read() for post in Post.query.all()]
         data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
         data['japans'] = [japan.read() for japan in Japan.query.all()]
+        data['nigerias'] = [nigeria.read() for nigeria in Nigeria.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -224,7 +227,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans']:
+    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
@@ -239,6 +242,7 @@ def restore_data(data):
         _ = Post.restore(data['posts'])
         _ = Sandiego.restore(data['sandiegos'])
         _ = Japan.restore(data['japans'])
+        _ = Nigeria.restore(data['nigerias'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
