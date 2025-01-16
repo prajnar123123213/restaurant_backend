@@ -62,6 +62,7 @@ class China(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print (f"Record successfully added: {self}")
         except IntegrityError as e:
             db.session.rollback()
             logging.warning(f"IntegrityError: Could not create post with title '{self._title}' due to {str(e)}.")
@@ -184,11 +185,12 @@ def initChinas():
             China(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for China in chinas:
+        for i in chinas:
+            print(f"Attempting to create record: {repr(i)}")
             try:
-                China.create()
-                print(f"Record created: {repr(China)}")
+                i.create()
+                print(f"Record created: {repr(i)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {China._title}")
+                print(f"Records exist, duplicate email, or error: {i._title}")
