@@ -184,11 +184,11 @@ def initSouthafricas():
             Southafrica(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for Southafrica in southafricas:
+        for i in southafricas:
             try:
-                Southafrica.create()
-                print(f"Record created: {repr(Southafrica)}")
+                i.create()
+                print(f"Record created: {repr(i)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {Southafrica._title}")
+                print(f"Records exist, duplicate email, or error: {i._title}")

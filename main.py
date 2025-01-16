@@ -13,6 +13,7 @@ import shutil
 # import "objects" from "this" project
 from __init__ import app, db, login_manager  # Key Flask objects 
 # API endpoints
+from api.southafrica import southafrica_api
 from api.user import user_api 
 from api.pfp import pfp_api
 #from api.southAfrica import southafrica_api # type: ignore
@@ -37,21 +38,20 @@ from api.brazil import brazil_api
 from api.peru import peru_api
 from api.argentina import argentina_api
 from api.chile import chile_api
-from api.southafrica import southafrica_api
 
 from api.vote import vote_api
 # database Initialization functions
+from model.southafrica import Southafrica, initSouthafricas
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
 from model.group import Group, initGroups
 from model.channel import Channel, initChannels
 from model.post import Post, initPosts
-from model.southafrica import Southafrica, initSouthafricas
 from model.sandiego import Sandiego, initSandiegos
 from model.japan import Japan, initJapans
 from model.nigeria import Nigeria, initNigerias
-from model.southafrica import Southafrica, initSouthafricas
+#from model.southafrica import Southafrica, initSouthafricas
 from model.china import China, initChinas
 from model.india import India, initIndias
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
@@ -59,6 +59,7 @@ from model.vote import Vote, initVotes
 # server only Views
 
 # register URIs for api endpoints
+app.register_blueprint(southafrica_api)
 app.register_blueprint(messages_api) # Adi added this, messages for his website
 app.register_blueprint(user_api)
 app.register_blueprint(pfp_api) 
@@ -79,7 +80,6 @@ app.register_blueprint(peru_api)
 app.register_blueprint(argentina_api)
 app.register_blueprint(chile_api)
 app.register_blueprint(sandiego_api)
-app.register_blueprint(southafrica_api)
 
 # Added new files to create nestPosts, uses a different format than Mortensen and didn't want to touch his junk
 app.register_blueprint(nestPost_api)
@@ -186,6 +186,7 @@ custom_cli = AppGroup('custom', help='Custom commands')
 # Define a command to run the data generation functions
 @custom_cli.command('generate_data')
 def generate_data():
+    initSouthafricas()
     initUsers()
     initSections()
     initGroups()
