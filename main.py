@@ -45,6 +45,7 @@ from model.southafrica import Southafrica, initSouthafricas
 from model.sandiego import initSandiegos
 from model.india import initIndias
 from model.japan import initJapans
+from model.china import initChinas
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
@@ -53,7 +54,6 @@ from model.channel import Channel, initChannels
 from model.post import Post, initPosts
 from model.nigeria import initNigerias
 #from model.southafrica import Southafrica, initSouthafricas
-from model.china import China, initChinas
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
 # server only Views
@@ -190,13 +190,13 @@ def generate_data():
     initSandiegos()
     initIndias()
     initNigerias()
+    initChinas()
     initJapans()
     initUsers()
     initSections()
     initGroups()
     initChannels()
     initPosts()
-    initChinas()
     initNestPosts()
     initVotes()
     
@@ -220,7 +220,6 @@ def extract_data():
         data['groups'] = [group.read() for group in Group.query.all()]
         data['channels'] = [channel.read() for channel in Channel.query.all()]
         data['posts'] = [post.read() for post in Post.query.all()]
-        data['chinas'] = [china.read() for china in China.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -248,7 +247,6 @@ def restore_data(data):
         _ = Group.restore(data['groups'], users)
         _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
-        _ = China.restore(data['chinas'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
