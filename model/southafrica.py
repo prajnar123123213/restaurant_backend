@@ -180,8 +180,8 @@ def initSouthafricas():
         """Tester data for table"""
         southafricas = [
             Southafrica(title='Mcdonals', comment='Good price and tasted good', content={'type': 'announcement'}, user_id=1),
-            Southafrica(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            Southafrica(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+            Southafrica(title='Churrascaria Palace', comment='Had a great dining expirience and food was great', content={'type': 'announcement'}, user_id=2),
+            Southafrica(title='Piatto Farrarmare', comment='Unique food but tasted good.', content={'type': 'announcement'}, user_id=3),
         ]
         
         for i in southafricas:
