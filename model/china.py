@@ -3,10 +3,9 @@ import logging
 from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
 from sqlalchemy.exc import IntegrityError
-from __init__ import app, db
 from model.user import User
 from model.channel import Channel
-
+from __init__ import app, db
 class China(db.Model):
     """
     Post Model
@@ -63,6 +62,7 @@ class China(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print (f"Record successfully added: {self}")
         except IntegrityError as e:
             db.session.rollback()
             logging.warning(f"IntegrityError: Could not create post with title '{self._title}' due to {str(e)}.")
@@ -180,16 +180,17 @@ def initChinas():
         db.create_all()
         """Tester data for table"""
         chinas = [
-            China(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
-            China(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            China(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+            China(title='West Lake', comment='I loved the flavors!', content={'type': 'announcement'}, user_id=1),
+            China(title='Silk Road Cuisine', comment='The view from this restaurant was amazing', content={'type': 'announcement'}, user_id=2),
+            China(title='Green Tea Cafe', comment='Delicious!', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for China in chinas:
+        for i in chinas:
+            print(f"Attempting to create record: {repr(i)}")
             try:
-                China.create()
-                print(f"Record created: {repr(China)}")
+                i.create()
+                print(f"Record created: {repr(i)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {China._title}")
+                print(f"Records exist, duplicate email, or error: {i._title}")

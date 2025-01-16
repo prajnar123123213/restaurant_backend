@@ -3,10 +3,9 @@ import logging
 from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
 from sqlalchemy.exc import IntegrityError
-from __init__ import app, db
 from model.user import User
 from model.channel import Channel
-
+from __init__ import app, db
 class Southafrica(db.Model):
     """
     Post Model
@@ -180,16 +179,16 @@ def initSouthafricas():
         db.create_all()
         """Tester data for table"""
         southafricas = [
-            Southafrica(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
-            Southafrica(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            Southafrica(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+            Southafrica(title='Mcdonals', comment='Good price and tasted good', content={'type': 'announcement'}, user_id=1),
+            Southafrica(title='Churrascaria Palace', comment='Had a great dining expirience and food was great', content={'type': 'announcement'}, user_id=2),
+            Southafrica(title='Piatto Farrarmare', comment='Unique food but tasted good.', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for Southafrica in southafricas:
+        for i in southafricas:
             try:
-                Southafrica.create()
-                print(f"Record created: {repr(Southafrica)}")
+                i.create()
+                print(f"Record created: {repr(i)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {Southafrica._title}")
+                print(f"Records exist, duplicate email, or error: {i._title}")

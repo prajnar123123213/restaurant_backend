@@ -6,7 +6,6 @@ from sqlalchemy.exc import IntegrityError
 from __init__ import app, db
 from model.user import User
 from model.channel import Channel
-
 class Japan(db.Model):
     """
     Post Model
@@ -63,6 +62,7 @@ class Japan(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print (f"Record successfully added: {self}")
         except IntegrityError as e:
             db.session.rollback()
             logging.warning(f"IntegrityError: Could not create post with title '{self._title}' due to {str(e)}.")
@@ -180,16 +180,17 @@ def initJapans():
         db.create_all()
         """Tester data for table"""
         japans = [
-            Japan(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
-            Japan(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            Japan(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+            Japan(title='Hakamarut', comment='Very delicious', content={'type': 'announcement'}, user_id=1),
+            Japan(title='Sakura Restaurant', comment='Smelled and looked delicious', content={'type': 'announcement'}, user_id=2),
+            Japan(title='Tokyo Cafe', comment='Had amazing drinks too!', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for Japan in japans:
+        for i in japans:
+            print(f"Attempting to create record: {repr(i)}")
             try:
-                Japan.create()
-                print(f"Record created: {repr(Japan)}")
+                i.create()
+                print(f"Record created: {repr(i)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {Japan._title}")
+                print(f"Records exist, duplicate email, or error: {i._title}")
