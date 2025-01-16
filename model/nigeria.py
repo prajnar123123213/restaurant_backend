@@ -1,4 +1,4 @@
-# china.py
+# nigeria.py
 import logging
 from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
@@ -7,7 +7,7 @@ from __init__ import app, db
 from model.user import User
 from model.channel import Channel
 
-class China(db.Model):
+class Nigeria(db.Model):
     """
     Post Model
     
@@ -20,7 +20,7 @@ class China(db.Model):
         _content (db.Column): A JSON blob representing the content of the post.
         _user_id (db.Column): An integer representing the user who created the post.
     """
-    __tablename__ = 'chinas'
+    __tablename__ = 'nigerias'
 
     id = db.Column(db.Integer, primary_key=True)
     _title = db.Column(db.String(255), nullable=False)
@@ -51,7 +51,7 @@ class China(db.Model):
         Returns:
             str: A text representation of how to create the object.
         """
-        return f"China(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id})"
+        return f"Nigeria(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id})"
 
     def create(self):
         """
@@ -103,7 +103,7 @@ class China(db.Model):
             Post: The updated post object, or None on error.
         """
         
-        inputs = China.query.get(self.id)
+        inputs = Nigeria.query.get(self.id)
         
         title = inputs._title
         content = inputs._content
@@ -154,17 +154,17 @@ class China(db.Model):
         for post_data in data:
             _ = post_data.pop('id', None)  # Remove 'id' from post_data
             title = post_data.get("title", None)
-            post = China.query.filter_by(_title=title).first()
+            post = Nigeria.query.filter_by(_title=title).first()
             if post:
                 post.update(post_data)
             else:
-                post = China(**post_data)
+                post = Nigeria(**post_data)
                 post.update(post_data)
                 post.create()
         
-def initChinas():
+def initNigerias():
     """
-    The initChina function creates the Post table and adds tester data to the table.
+    The initNigeria function creates the Post table and adds tester data to the table.
     
     Uses:
         The db ORM methods to create the table.
@@ -179,17 +179,17 @@ def initChinas():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        chinas = [
-            China(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
-            China(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            China(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+        nigerias = [
+            Nigeria(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
+            Nigeria(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
+            Nigeria(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for China in chinas:
+        for Nigeria in nigerias:
             try:
-                China.create()
-                print(f"Record created: {repr(China)}")
+                Nigeria.create()
+                print(f"Record created: {repr(Nigeria)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {China._title}")
+                print(f"Records exist, duplicate email, or error: {Nigeria._title}")

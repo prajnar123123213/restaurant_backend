@@ -37,6 +37,7 @@ from api.brazil import brazil_api
 from api.peru import peru_api
 from api.argentina import argentina_api
 from api.chile import chile_api
+from api.southafrica import southafrica_api
 
 from api.vote import vote_api
 # database Initialization functions
@@ -48,6 +49,11 @@ from model.channel import Channel, initChannels
 from model.post import Post, initPosts
 from model.southafrica import Southafrica, initSouthafricas
 from model.sandiego import Sandiego, initSandiegos
+from model.japan import Japan, initJapans
+from model.nigeria import Nigeria, initNigerias
+from model.southafrica import Southafrica, initSouthafricas
+from model.china import China, initChinas
+from model.india import India, initIndias
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
 # server only Views
@@ -186,7 +192,6 @@ def generate_data():
     initChannels()
     initPosts()
     initSandiegos()
-    initSouthafricas()
     initNestPosts()
     initVotes()
     
@@ -211,7 +216,6 @@ def extract_data():
         data['channels'] = [channel.read() for channel in Channel.query.all()]
         data['posts'] = [post.read() for post in Post.query.all()]
         data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
-        data['southafrica'] = [southafrica.read() for southafrica in Southafrica.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -226,7 +230,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts']:
+    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias', 'southafricas', 'chinas', 'indias']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
@@ -240,7 +244,6 @@ def restore_data(data):
         _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
         _ = Sandiego.restore(data['sandiegos'])
-        _ = Southafrica.restore(data['southafricas'])
     print("Data restored to the new database.")
 
 # Define a command to backup data

@@ -1,4 +1,4 @@
-# sandiego.py
+# southafrica.py
 import logging
 from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
@@ -164,7 +164,7 @@ class Southafrica(db.Model):
         
 def initSouthafricas():
     """
-    The initSouthafricass function creates the Post table and adds tester data to the table.
+    The initSouthafrica function creates the Post table and adds tester data to the table.
     
     Uses:
         The db ORM methods to create the table.
@@ -179,13 +179,13 @@ def initSouthafricas():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        southafricass = [
+        southafricas = [
             Southafrica(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
             Southafrica(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
             Southafrica(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for Southafrica in Southafricas:
+        for Southafrica in southafricas:
             try:
                 Southafrica.create()
                 print(f"Record created: {repr(Southafrica)}")
