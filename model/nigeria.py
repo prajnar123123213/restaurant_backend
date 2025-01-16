@@ -181,9 +181,9 @@ def initNigerias():
         db.create_all()
         """Tester data for table"""
         nigerias = [
-            Nigeria(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
-            Nigeria(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            Nigeria(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+            Nigeria(title='Kilimanjaro', comment='It was ok! The enviornment was great though.', content={'type': 'announcement'}, user_id=1),
+            Nigeria(title='McFestine', comment='Enjoyed the diverse food options!', content={'type': 'announcement'}, user_id=2),
+            Nigeria(title='Unity', comment='Amazing staff, liked the food!', content={'type': 'announcement'}, user_id=3),
         ]
         
         for i in nigerias:

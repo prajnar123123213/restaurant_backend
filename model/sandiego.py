@@ -180,9 +180,9 @@ def initSandiegos():
         db.create_all()
         """Tester data for table"""
         sandiegos = [
-            Sandiego(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
-            Sandiego(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            Sandiego(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+            Sandiego(title='Chipotle', comment='Had the burrito bowl. Amazing!', content={'type': 'announcement'}, user_id=1),
+            Sandiego(title='McDonalds', comment='Not that good...', content={'type': 'announcement'}, user_id=2),
+            Sandiego(title='In N Out', comment='Great!!', content={'type': 'announcement'}, user_id=3),
         ]
         
         for i in sandiegos:

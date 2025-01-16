@@ -15,6 +15,7 @@ from __init__ import app, db, login_manager  # Key Flask objects
 # API endpoints
 from api.southafrica import southafrica_api
 from api.sandiego import sandiego_api
+from api.india import india_api
 from api.user import user_api 
 from api.pfp import pfp_api
 #from api.southAfrica import southafrica_api # type: ignore
@@ -33,7 +34,6 @@ from api.ethiopia import ethiopia_api
 from api.nigeria import nigeria_api
 from api.china import china_api
 from api.japan import japan_api
-from api.india import india_api
 from api.brazil import brazil_api
 from api.peru import peru_api
 from api.argentina import argentina_api
@@ -43,6 +43,7 @@ from api.vote import vote_api
 # database Initialization functions
 from model.southafrica import Southafrica, initSouthafricas
 from model.sandiego import initSandiegos
+from model.india import initIndias
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
@@ -53,7 +54,6 @@ from model.japan import Japan, initJapans
 from model.nigeria import initNigerias
 #from model.southafrica import Southafrica, initSouthafricas
 from model.china import China, initChinas
-from model.india import India, initIndias
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
 # server only Views
@@ -188,6 +188,7 @@ custom_cli = AppGroup('custom', help='Custom commands')
 def generate_data():
     initSouthafricas()
     initSandiegos()
+    initIndias()
     initNigerias()
     initUsers()
     initSections()
