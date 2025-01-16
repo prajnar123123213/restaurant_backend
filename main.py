@@ -15,7 +15,7 @@ from __init__ import app, db, login_manager  # Key Flask objects
 # API endpoints
 from api.user import user_api 
 from api.pfp import pfp_api
-from api.southAfrica import southafrica_api # type: ignore
+#from api.southAfrica import southafrica_api # type: ignore
 from api.nestImg import nestImg_api # Justin added this, custom format for his website
 from api.post import post_api
 from api.sandiego import sandiego_api

@@ -3,10 +3,9 @@ import logging
 from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
 from sqlalchemy.exc import IntegrityError
-from __init__ import app, db
 from model.user import User
 from model.channel import Channel
-
+from __init__ import app, db
 class Southafrica(db.Model):
     """
     Post Model
