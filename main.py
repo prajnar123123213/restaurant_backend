@@ -46,6 +46,7 @@ from model.sandiego import initSandiegos
 from model.india import initIndias
 from model.japan import initJapans
 from model.china import initChinas
+from model.ethiopia import initEthiopias 
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
@@ -187,6 +188,7 @@ custom_cli = AppGroup('custom', help='Custom commands')
 @custom_cli.command('generate_data')
 def generate_data():
     initSouthafricas()
+    initEthiopias()
     initSandiegos()
     initIndias()
     initNigerias()
@@ -234,7 +236,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'japans', 'nigerias', 'southafricas', 'sandiegos', 'chinas', 'indias']:
+    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'japans', 'nigerias', 'southafricas', 'sandiegos', 'chinas', 'indias', 'ethiopias']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
