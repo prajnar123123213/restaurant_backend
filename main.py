@@ -44,13 +44,13 @@ from api.vote import vote_api
 from model.southafrica import Southafrica, initSouthafricas
 from model.sandiego import initSandiegos
 from model.india import initIndias
+from model.japan import initJapans
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
 from model.group import Group, initGroups
 from model.channel import Channel, initChannels
 from model.post import Post, initPosts
-from model.japan import Japan, initJapans
 from model.nigeria import initNigerias
 #from model.southafrica import Southafrica, initSouthafricas
 from model.china import China, initChinas
@@ -190,6 +190,7 @@ def generate_data():
     initSandiegos()
     initIndias()
     initNigerias()
+    initJapans()
     initUsers()
     initSections()
     initGroups()
