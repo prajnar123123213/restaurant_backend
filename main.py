@@ -54,6 +54,7 @@ from model.china import China, initChinas
 from model.india import India, initIndias
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
+from model.ethiopia import Ethiopia, initEthiopias
 # server only Views
 
 # register URIs for api endpoints
@@ -197,6 +198,7 @@ def generate_data():
     initIndias()
     initNestPosts()
     initVotes()
+    initEthiopias()
     
 # Backup the old database
 def backup_database(db_uri, backup_uri):
@@ -224,6 +226,7 @@ def extract_data():
         data['southafricas'] = [southafrica.read() for southafrica in Southafrica.query.all()]
         data['chinas'] = [china.read() for china in China.query.all()]
         data['indias'] = [india.read() for india in India.query.all()]
+        data['ethiopias'] = [ethiopia.read() for ethiopia in Ethiopia.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -238,7 +241,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias', 'southafricas', 'chinas', 'indias']:
+    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias', 'southafricas', 'chinas', 'indias', 'ethiopias']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
@@ -257,6 +260,7 @@ def restore_data(data):
         _ = Southafrica.restore(data['southafricas'])
         _ = China.restore(data['chinas'])
         _ = India.restore(data['indias'])
+        _ = Ethiopia.restore(data['ethiopias'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
