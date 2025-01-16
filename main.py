@@ -193,6 +193,7 @@ def generate_data():
     initChannels()
     initPosts()
     initSandiegos()
+    initChinas()
     initNestPosts()
     initVotes()
     
@@ -217,6 +218,7 @@ def extract_data():
         data['channels'] = [channel.read() for channel in Channel.query.all()]
         data['posts'] = [post.read() for post in Post.query.all()]
         data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
+        data['chinas'] = [china.read() for china in China.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -245,6 +247,7 @@ def restore_data(data):
         _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
         _ = Sandiego.restore(data['sandiegos'])
+        _ = China.restore(data['chinas'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
