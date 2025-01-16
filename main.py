@@ -15,6 +15,7 @@ from __init__ import app, db, login_manager  # Key Flask objects
 # API endpoints
 from api.user import user_api 
 from api.pfp import pfp_api
+from api.southAfrica import southafrica_api # type: ignore
 from api.nestImg import nestImg_api # Justin added this, custom format for his website
 from api.post import post_api
 from api.sandiego import sandiego_api
@@ -45,6 +46,7 @@ from model.section import Section, initSections
 from model.group import Group, initGroups
 from model.channel import Channel, initChannels
 from model.post import Post, initPosts
+from model.southafrica import Southafrica, initSouthafricas
 from model.sandiego import Sandiego, initSandiegos
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
@@ -71,6 +73,7 @@ app.register_blueprint(peru_api)
 app.register_blueprint(argentina_api)
 app.register_blueprint(chile_api)
 app.register_blueprint(sandiego_api)
+app.register_blueprint(southafrica_api)
 
 # Added new files to create nestPosts, uses a different format than Mortensen and didn't want to touch his junk
 app.register_blueprint(nestPost_api)
@@ -183,6 +186,7 @@ def generate_data():
     initChannels()
     initPosts()
     initSandiegos()
+    initSouthafricas()
     initNestPosts()
     initVotes()
     
@@ -207,6 +211,7 @@ def extract_data():
         data['channels'] = [channel.read() for channel in Channel.query.all()]
         data['posts'] = [post.read() for post in Post.query.all()]
         data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
+        data['southafrica'] = [southafrica.read() for southafrica in Southafrica.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -235,6 +240,7 @@ def restore_data(data):
         _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
         _ = Sandiego.restore(data['sandiegos'])
+        _ = Southafrica.restore(data['southafricas'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
