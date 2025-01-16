@@ -196,9 +196,9 @@ def generate_data():
     initSouthafricas()
     initChinas()
     initIndias()
+    initEthiopias()
     initNestPosts()
     initVotes()
-    initEthiopias()
     
 # Backup the old database
 def backup_database(db_uri, backup_uri):

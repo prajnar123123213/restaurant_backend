@@ -1,95 +1,194 @@
-from __init__ import db, app
+import logging
+from sqlite3 import IntegrityError
+from sqlalchemy import Text, JSON
 from sqlalchemy.exc import IntegrityError
-from model.post import Post
+from __init__ import app, db
 from model.user import User
+from model.channel import Channel
 
 class Ethiopia(db.Model):
     """
-    Ethiopia Model
-
-    The Vote class represents a single upvote or downvote on a post by a user.
-
+    Post Model
+    
+    The Post class represents an individual contribution or discussion within a channel.
+    
     Attributes:
-        id (db.Column): The primary key, an integer representing the unique identifier for the vote.
-        _vote_type (db.Column): A string representing the type of vote ("upvote" or "downvote").
-        _user_id (db.Column): An integer representing the ID of the user who cast the vote.
-        _post_id (db.Column): An integer representing the ID of the post that received the vote.
+        id (db.Column): The primary key, an integer representing the unique identifier for the post.
+        _title (db.Column): A string representing the title of the post.
+        _comment (db.Column): A string representing the comment of the post.
+        _content (db.Column): A JSON blob representing the content of the post.
+        _user_id (db.Column): An integer representing the user who created the post.
     """
     __tablename__ = 'ethiopias'
 
     id = db.Column(db.Integer, primary_key=True)
-    _vote_type = db.Column(db.String(10), nullable=False)  # "upvote" or "downvote"
+    _title = db.Column(db.String(255), nullable=False)
+    _comment = db.Column(db.String(255), nullable=False)
+    _content = db.Column(JSON, nullable=False)
     _user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    _post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
 
-    def __init__(self, vote_type, user_id, post_id):
+    def __init__(self, title, comment, user_id=None, content={}, user_name=None):
         """
-        Constructor to initialize a vote.
-
+        Constructor, 1st step in object creation.
+        
         Args:
-            vote_type (str): Type of the vote, either "upvote" or "downvote".
-            user_id (int): ID of the user who cast the vote.
-            post_id (int): ID of the post that received the vote.
+            title (str): The title of the post.
+            comment (str): The comment of the post.
+            user_id (int): The user who created the post.
+            content (dict): The content of the post.
         """
-        self._vote_type = vote_type
+        self._title = title
+        self._comment = comment
         self._user_id = user_id
-        self._post_id = post_id
+        self._content = content
+
+    def __repr__(self):
+        """
+        The __repr__ method is a special method used to represent the object in a string format.
+        Called by the repr(post) built-in function, where post is an instance of the Post class.
+        
+        Returns:
+            str: A text representation of how to create the object.
+        """
+        return f"Ethiopia(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id})"
 
     def create(self):
         """
-        Add the vote to the database and commit the transaction.
+        Creates a new post in the database.
+        
+        Returns:
+            Post: The created post object, or None on error.
         """
         try:
             db.session.add(self)
             db.session.commit()
-        except Exception as e:
+        except IntegrityError as e:
             db.session.rollback()
-            raise e
-
+            logging.warning(f"IntegrityError: Could not create post with title '{self._title}' due to {str(e)}.")
+            return None
+        return self
+        
     def read(self):
         """
-        Retrieve the vote data as a dictionary.
-
+        The read method retrieves the object data from the object's attributes and returns it as a dictionary.
+        
+        Uses:
+            The Channel.query and User.query methods to retrieve the channel and user objects.
+        
         Returns:
-            dict: Dictionary with vote information.
+            dict: A dictionary containing the post data, including user and channel names.
         """
-        return {
+        user = User.query.get(self._user_id)
+        channel = Channel.query.get(self._channel_id)
+        data = {
             "id": self.id,
-            "vote_type": self._vote_type,
-            "user_id": self._user_id,
-            "post_id": self._post_id
+            "title": self._title,
+            "comment": self._comment,
+            "content": self._content,
+            "user_name": user.name if user else None,
+            "channel_name": channel.name if channel else None
         }
+        return data
+    
 
+    def update(self):
+        """
+        Updates the post object with new data.
+        
+        Args:
+            inputs (dict): A dictionary containing the new data for the post.
+        
+        Returns:
+            Post: The updated post object, or None on error.
+        """
+        
+        inputs = Ethiopia.query.get(self.id)
+        
+        title = inputs._title
+        content = inputs._content
+        user_name = User.query.get(inputs._user_id).name if inputs._user_id else None
+                
+        if user_name:
+            user = User.query.filter_by(_name=user_name).first()
+            if user:
+                user_id = user.id
+            else:
+                return None
+
+        # Update table with new data
+        if title:
+            self._title = title
+        if content:
+            self._content = content
+        if user_id:
+            self._user_id = user_id
+
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            logging.warning(f"IntegrityError: Could not update post with title '{title}' due to missing channel_id.")
+            return None
+        return self
+    
     def delete(self):
         """
-        Remove the vote from the database and commit the transaction.
-        """
+        The delete method removes the object from the database and commits the transaction.
+        
+        Uses:
+            The db ORM methods to delete and commit the transaction.
+        
+        Raises:
+            Exception: An error occurred when deleting the object from the database.
+        """    
         try:
             db.session.delete(self)
             db.session.commit()
         except Exception as e:
             db.session.rollback()
             raise e
-
+        
+    @staticmethod
+    def restore(data):
+        for post_data in data:
+            _ = post_data.pop('id', None)  # Remove 'id' from post_data
+            title = post_data.get("title", None)
+            post = Ethiopia.query.filter_by(_title=title).first()
+            if post:
+                post.update(post_data)
+            else:
+                post = Ethiopia(**post_data)
+                post.update(post_data)
+                post.create()
+        
 def initEthiopias():
     """
-    Initialize the Vote table with any required starter data.
-    """
+    The initEthiopias function creates the Post table and adds tester data to the table.
+    
+    Uses:
+        The db ORM methods to create the table.
+    
+    Instantiates:
+        Post objects with tester data.
+    
+    Raises:
+        IntegrityError: An error occurred when adding the tester data to the table.
+    """        
     with app.app_context():
-        # Create database tables if they don't exist
+        """Create database and tables"""
         db.create_all()
-
-        # Optionally, add some test data (replace with actual values as needed)
-        ethiopias = [
-            Ethiopia(vote_type='upvote', user_id=1, post_id=1),
-            Ethiopia(vote_type='downvote', user_id=2, post_id=1),
+        """Tester data for table"""
+        Ethiopias = [
+            Ethiopia(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
+            Ethiopia(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
+            Ethiopia(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for ethiopia in ethiopias:
+        for Ethiopia in Ethiopias:
             try:
-                db.session.add(ethiopia)
-                db.session.commit()
-                print(f"Record created: {repr(ethiopia)}")
+                Ethiopia.create()
+                print(f"Record created: {repr(Ethiopia)}")
             except IntegrityError:
-                db.session.rollback()
-                print(f"Duplicate or error: {repr(ethiopia)}")
+                '''fails with bad or duplicate data'''
+                db.session.remove()
+                print(f"Records exist, duplicate email, or error: {Ethiopia._title}")
