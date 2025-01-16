@@ -14,12 +14,12 @@ import shutil
 from __init__ import app, db, login_manager  # Key Flask objects 
 # API endpoints
 from api.southafrica import southafrica_api
+from api.sandiego import sandiego_api
 from api.user import user_api 
 from api.pfp import pfp_api
 #from api.southAfrica import southafrica_api # type: ignore
 from api.nestImg import nestImg_api # Justin added this, custom format for his website
 from api.post import post_api
-from api.sandiego import sandiego_api
 from api.channel import channel_api
 from api.group import group_api
 from api.section import section_api
@@ -42,15 +42,15 @@ from api.chile import chile_api
 from api.vote import vote_api
 # database Initialization functions
 from model.southafrica import Southafrica, initSouthafricas
+from model.sandiego import initSandiegos
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
 from model.group import Group, initGroups
 from model.channel import Channel, initChannels
 from model.post import Post, initPosts
-from model.sandiego import Sandiego, initSandiegos
 from model.japan import Japan, initJapans
-from model.nigeria import Nigeria, initNigerias
+from model.nigeria import initNigerias
 #from model.southafrica import Southafrica, initSouthafricas
 from model.china import China, initChinas
 from model.india import India, initIndias
@@ -187,12 +187,13 @@ custom_cli = AppGroup('custom', help='Custom commands')
 @custom_cli.command('generate_data')
 def generate_data():
     initSouthafricas()
+    initSandiegos()
+    initNigerias()
     initUsers()
     initSections()
     initGroups()
     initChannels()
     initPosts()
-    initSandiegos()
     initChinas()
     initNestPosts()
     initVotes()
@@ -217,7 +218,6 @@ def extract_data():
         data['groups'] = [group.read() for group in Group.query.all()]
         data['channels'] = [channel.read() for channel in Channel.query.all()]
         data['posts'] = [post.read() for post in Post.query.all()]
-        data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
         data['chinas'] = [china.read() for china in China.query.all()]
     return data
 
@@ -233,7 +233,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias', 'southafricas', 'chinas', 'indias']:
+    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'japans', 'nigerias', 'southafricas', 'sandiegos', 'chinas', 'indias']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
@@ -246,7 +246,6 @@ def restore_data(data):
         _ = Group.restore(data['groups'], users)
         _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
-        _ = Sandiego.restore(data['sandiegos'])
         _ = China.restore(data['chinas'])
     print("Data restored to the new database.")
 

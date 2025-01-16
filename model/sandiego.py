@@ -3,10 +3,9 @@ import logging
 from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
 from sqlalchemy.exc import IntegrityError
-from __init__ import app, db
 from model.user import User
 from model.channel import Channel
-
+from __init__ import app, db
 class Sandiego(db.Model):
     """
     Post Model
@@ -63,6 +62,7 @@ class Sandiego(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print (f"Record successfully added: {self}")
         except IntegrityError as e:
             db.session.rollback()
             logging.warning(f"IntegrityError: Could not create post with title '{self._title}' due to {str(e)}.")
@@ -185,11 +185,12 @@ def initSandiegos():
             Sandiego(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for Sandiego in sandiegos:
+        for i in sandiegos:
+            print(f"Attempting to create record: {repr(i)}")
             try:
-                Sandiego.create()
-                print(f"Record created: {repr(Sandiego)}")
+                i.create()
+                print(f"Record created: {repr(i)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {Sandiego._title}")
+                print(f"Records exist, duplicate email, or error: {i._title}")
