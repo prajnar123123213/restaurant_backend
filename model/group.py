@@ -205,7 +205,8 @@ def initGroups():
             Group(name='Chess Champion', section_id=share_and_care.id, moderators=[User.query.get(1)]),
             Group(name='Underground Music', section_id=share_and_care.id, moderators=[User.query.get(1)]),
             Group(name='The Hungry Games', section_id=share_and_care.id, moderators=[User.query.get(1)]),
-            Group(name='REVVIT', section_id=share_and_care.id, moderators=[User.query.get(1)])
+            Group(name='REVVIT', section_id=share_and_care.id, moderators=[User.query.get(1)]),
+            Group(name='Japan', section_id=share_and_care.id, moderators=[User.query.get(1)]),
         ]
 
         # Vote for the GOAT Groups
