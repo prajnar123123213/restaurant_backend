@@ -39,7 +39,6 @@ from api.peru import peru_api
 from api.argentina import argentina_api
 from api.chile import chile_api
 
-from api.vote import vote_api
 # database Initialization functions
 from model.southafrica import Southafrica, initSouthafricas
 from model.sandiego import initSandiegos
@@ -55,7 +54,6 @@ from model.post import Post, initPosts
 from model.nigeria import initNigerias
 #from model.southafrica import Southafrica, initSouthafricas
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
-from model.vote import Vote, initVotes
 from model.ethiopia import Ethiopia, initEthiopias
 # server only Views
 
@@ -85,7 +83,6 @@ app.register_blueprint(sandiego_api)
 # Added new files to create nestPosts, uses a different format than Mortensen and didn't want to touch his junk
 app.register_blueprint(nestPost_api)
 app.register_blueprint(nestImg_api)
-app.register_blueprint(vote_api)
 app.register_blueprint(car_api)
 
 # Tell Flask-Login the view function name of your login route
@@ -206,7 +203,6 @@ def generate_data():
     initIndias()
     initEthiopias()
     initNestPosts()
-    initVotes()
     
 # Backup the old database
 def backup_database(db_uri, backup_uri):
