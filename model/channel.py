@@ -201,6 +201,8 @@ def initChannels():
             Channel(name='Songs', group_id=Underground_Music.id),
             Channel(name='Genres', group_id=Underground_Music.id),
             Channel(name='Japan', group_id=chess_forum.id),
+            Channel(name='China', group_id=chess_forum.id),
+            Channel(name='India', group_id=chess_forum.id),
         ]
 
         # P2 channels below:
@@ -248,6 +250,8 @@ def initChannels():
             Channel(name='Fiction Books', group_id=book_reviews.id),
             Channel(name='Nonfiction Books', group_id=book_reviews.id),
             Channel(name='Combos', group_id=flavor_fusion.id),
+            Channel(name='Sandiego', group_id=instabox.id),
+            Channel(name='Chile', group_id=instabox.id),
         ]
         
         

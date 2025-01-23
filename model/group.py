@@ -207,6 +207,8 @@ def initGroups():
             Group(name='The Hungry Games', section_id=share_and_care.id, moderators=[User.query.get(1)]),
             Group(name='REVVIT', section_id=share_and_care.id, moderators=[User.query.get(1)]),
             Group(name='Japan', section_id=share_and_care.id, moderators=[User.query.get(1)]),
+            Group(name='China', section_id=share_and_care.id, moderators=[User.query.get(1)]),
+            Group(name='India', section_id=share_and_care.id, moderators=[User.query.get(1)]),
         ]
 
         # Vote for the GOAT Groups
@@ -228,6 +230,8 @@ def initGroups():
             Group(name='Flavor Fusion', section_id=rate_and_relate_section.id, moderators=[User.query.get(1)]),
             Group(name='Book Reviews', section_id=rate_and_relate_section.id, moderators=[User.query.get(1)]),
             Group(name='Update The Nest', section_id=rate_and_relate_section.id, moderators=[User.query.get(1)]),
+            Group(name='Sandiego', section_id=rate_and_relate_section.id, moderators=[User.query.get(1)]),
+            Group(name='Chile', section_id=rate_and_relate_section.id, moderators=[User.query.get(1)]),
         ]
 
         for group in groups:
