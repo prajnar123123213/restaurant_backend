@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from __init__ import app, db
 from model.user import User
 from model.channel import Channel
+from model.nigeria import Nigeria  
 
 class Post(db.Model):
     """
@@ -29,8 +30,9 @@ class Post(db.Model):
     _content = db.Column(JSON, nullable=False)
     _user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     _channel_id = db.Column(db.Integer, db.ForeignKey('channels.id'), nullable=False)
-
-    def __init__(self, title, comment, user_id=None, channel_id=None, content={}, user_name=None, channel_name=None):
+    _nigeria_id = db.Column(db.Integer, db.ForeignKey('nigerias.id'), nullable=True)
+    
+    def __init__(self, title, comment, user_id=None, channel_id=None, nigeria_id=None, content={}, user_name=None, channel_name=None):
         """
         Constructor, 1st step in object creation.
         
@@ -45,6 +47,7 @@ class Post(db.Model):
         self._comment = comment
         self._user_id = user_id
         self._channel_id = channel_id
+        self._nigeria_id = nigeria_id
         self._content = content
 
     def __repr__(self):
@@ -55,7 +58,7 @@ class Post(db.Model):
         Returns:
             str: A text representation of how to create the object.
         """
-        return f"Post(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id}, channel_id={self._channel_id})"
+        return f"Post(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id}, channel_id={self._channel_id}, nigeria_id={self._nigeria_id} )"
 
     def create(self):
         """
@@ -85,13 +88,15 @@ class Post(db.Model):
         """
         user = User.query.get(self._user_id)
         channel = Channel.query.get(self._channel_id)
+        nigeria = Nigeria.query.get(self._channel_id)
         data = {
             "id": self.id,
             "title": self._title,
             "comment": self._comment,
             "content": self._content,
             "user_name": user.name if user else None,
-            "channel_name": channel.name if channel else None
+            "channel_name": channel.name if channel else None,
+            "nigeria_name": nigeria.name if nigeria else None
         }
         return data
     
@@ -114,6 +119,7 @@ class Post(db.Model):
         channel_id = inputs._channel_id
         user_name = User.query.get(inputs._user_id).name if inputs._user_id else None
         channel_name = Channel.query.get(inputs._channel_id).name if inputs._channel_id else None
+        nigeria_name = Nigeria.query.get(inputs._nigeria_id).name if inputs._nigeria_id else None
 
         # If channel_name is provided, look up the corresponding channel_id
         if channel_name:
@@ -128,6 +134,13 @@ class Post(db.Model):
             else:
                 return None
 
+        if nigeria_name:
+            nigeria = Nigeria.query.filter_by(_name=nigeria_name).first()
+            if nigeria:
+                nigeria_id = nigeria.id
+            else:
+                return None
+            
         # Update table with new data
         if title:
             self._title = title
@@ -137,6 +150,8 @@ class Post(db.Model):
             self._channel_id = channel_id
         if user_id:
             self._user_id = user_id
+        if nigeria_id:
+            self._nigeria_id = nigeria_id
 
         try:
             db.session.commit()
@@ -194,9 +209,9 @@ def initPosts():
         db.create_all()
         """Tester data for table"""
         posts = [
-            Post(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1, channel_id=1),
-            Post(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=1, channel_id=1),
-            Post(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=2, channel_id=1),
+            Post(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1, channel_id=1, nigeria_id=1),
+            Post(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=1, channel_id=1, nigeria_id=1),
+            Post(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=2, channel_id=1, niergia_id=1),
         ]
         
         for post in posts:

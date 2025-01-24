@@ -41,18 +41,17 @@ from api.chile import chile_api
 
 # database Initialization functions
 from model.southafrica import Southafrica, initSouthafricas
-from model.sandiego import initSandiegos
-from model.india import initIndias
-from model.japan import initJapans
-from model.china import initChinas
+from model.sandiego import Sandiego, initSandiegos
+from model.india import India, initIndias
+from model.japan import Japan, initJapans
+from model.china import China, initChinas
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
 from model.group import Group, initGroups
 from model.channel import Channel, initChannels
 from model.post import Post, initPosts
-from model.nigeria import initNigerias
-#from model.southafrica import Southafrica, initSouthafricas
+from model.nigeria import Nigeria, initNigerias
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.ethiopia import Ethiopia, initEthiopias
 # server only Views
@@ -197,7 +196,6 @@ def generate_data():
     initPosts()
     initSandiegos()
     initJapans()
-    initNigerias()
     initSouthafricas()
     initChinas()
     initIndias()

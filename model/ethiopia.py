@@ -4,13 +4,13 @@ from sqlalchemy import Text, JSON
 from sqlalchemy.exc import IntegrityError
 from __init__ import app, db
 from model.user import User
-from model.channel import Channel
+from model.group import Group
 
 class Ethiopia(db.Model):
     """
     Post Model
     
-    The Post class represents an individual contribution or discussion within a channel.
+    The Post class represents an individual contribution or discussion within a group.
     
     Attributes:
         id (db.Column): The primary key, an integer representing the unique identifier for the post.
@@ -26,8 +26,9 @@ class Ethiopia(db.Model):
     _comment = db.Column(db.String(255), nullable=False)
     _content = db.Column(JSON, nullable=False)
     _user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    _group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
 
-    def __init__(self, title, comment, user_id=None, content={}, user_name=None):
+    def __init__(self, title, comment, user_id=None, group_id=None, content={}, user_name=None):
         """
         Constructor, 1st step in object creation.
         
@@ -40,6 +41,7 @@ class Ethiopia(db.Model):
         self._title = title
         self._comment = comment
         self._user_id = user_id
+        self._group_id = group_id
         self._content = content
 
     def __repr__(self):
@@ -50,7 +52,7 @@ class Ethiopia(db.Model):
         Returns:
             str: A text representation of how to create the object.
         """
-        return f"Ethiopia(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id})"
+        return f"Ethiopia(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id}, group_id={self._group_id})"
 
     def create(self):
         """
@@ -73,20 +75,20 @@ class Ethiopia(db.Model):
         The read method retrieves the object data from the object's attributes and returns it as a dictionary.
         
         Uses:
-            The Channel.query and User.query methods to retrieve the channel and user objects.
+            The Group.query and User.query methods to retrieve the group and user objects.
         
         Returns:
-            dict: A dictionary containing the post data, including user and channel names.
+            dict: A dictionary containing the post data, including user and group names.
         """
         user = User.query.get(self._user_id)
-        channel = Channel.query.get(self._channel_id)
+        group = Group.query.get(self._group_id)
         data = {
             "id": self.id,
             "title": self._title,
             "comment": self._comment,
             "content": self._content,
             "user_name": user.name if user else None,
-            "channel_name": channel.name if channel else None
+            "group_name": group.name if group else None
         }
         return data
     
@@ -127,7 +129,7 @@ class Ethiopia(db.Model):
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
-            logging.warning(f"IntegrityError: Could not update post with title '{title}' due to missing channel_id.")
+            logging.warning(f"IntegrityError: Could not update post with title '{title}' due to missing group_id.")
             return None
         return self
     
@@ -179,9 +181,9 @@ def initEthiopias():
         db.create_all()
         """Tester data for table"""
         Ethiopias = [
-            Ethiopia(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1),
-            Ethiopia(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2),
-            Ethiopia(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3),
+            Ethiopia(title='Added Group and Channel Select', comment='The Home Page has a Section, on this page we can select Group and Channel to allow blog filtering', content={'type': 'announcement'}, user_id=1, group_id=1),
+            Ethiopia(title='JSON content saving through content"field in database', comment='You could add other dialogs to a post that would allow custom data or even storing reference to uploaded images.', content={'type': 'announcement'}, user_id=2, group_id=2),
+            Ethiopia(title='Allows Post by different Users', comment='Different users seeing content is a key concept in social media.', content={'type': 'announcement'}, user_id=3, group_id=3),
         ]
         
         for Ethiopia in Ethiopias:

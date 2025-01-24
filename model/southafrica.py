@@ -3,14 +3,15 @@ import logging
 from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
 from sqlalchemy.exc import IntegrityError
-from model.user import User
-from model.channel import Channel
 from __init__ import app, db
+from model.user import User
+from model.group import Group
+
 class Southafrica(db.Model):
     """
     Post Model
     
-    The Post class represents an individual contribution or discussion within a channel.
+    The Post class represents an individual contribution or discussion within a group.
     
     Attributes:
         id (db.Column): The primary key, an integer representing the unique identifier for the post.
@@ -26,8 +27,9 @@ class Southafrica(db.Model):
     _comment = db.Column(db.String(255), nullable=False)
     _content = db.Column(JSON, nullable=False)
     _user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    _group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
 
-    def __init__(self, title, comment, user_id=None, content={}, user_name=None):
+    def __init__(self, title, comment, user_id=None, group_id=None, content={}, user_name=None):
         """
         Constructor, 1st step in object creation.
         
@@ -40,6 +42,7 @@ class Southafrica(db.Model):
         self._title = title
         self._comment = comment
         self._user_id = user_id
+        self._group_id = group_id
         self._content = content
 
     def __repr__(self):
@@ -50,7 +53,7 @@ class Southafrica(db.Model):
         Returns:
             str: A text representation of how to create the object.
         """
-        return f"Southafrica(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id})"
+        return f"Southafrica(id={self.id}, title={self._title}, comment={self._comment}, content={self._content}, user_id={self._user_id}, group_id={self._group_id})"
 
     def create(self):
         """
@@ -62,6 +65,7 @@ class Southafrica(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print (f"Record successfully added: {self}")
         except IntegrityError as e:
             db.session.rollback()
             logging.warning(f"IntegrityError: Could not create post with title '{self._title}' due to {str(e)}.")
@@ -79,14 +83,14 @@ class Southafrica(db.Model):
             dict: A dictionary containing the post data, including user and channel names.
         """
         user = User.query.get(self._user_id)
-        channel = Channel.query.get(self._channel_id)
+        group = Group.query.get(self._group_id)
         data = {
             "id": self.id,
             "title": self._title,
             "comment": self._comment,
             "content": self._content,
             "user_name": user.name if user else None,
-            "channel_name": channel.name if channel else None
+            "group_name": group.name if group else None
         }
         return data
     
@@ -127,7 +131,7 @@ class Southafrica(db.Model):
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
-            logging.warning(f"IntegrityError: Could not update post with title '{title}' due to missing channel_id.")
+            logging.warning(f"IntegrityError: Could not update post with title '{title}' due to missing group_id.")
             return None
         return self
     
@@ -163,7 +167,7 @@ class Southafrica(db.Model):
         
 def initSouthafricas():
     """
-    The initSouthafrica function creates the Post table and adds tester data to the table.
+    The initNigeria function creates the Post table and adds tester data to the table.
     
     Uses:
         The db ORM methods to create the table.
@@ -179,12 +183,13 @@ def initSouthafricas():
         db.create_all()
         """Tester data for table"""
         southafricas = [
-            Southafrica(title='Mcdonals', comment='Good price and tasted good', content={'type': 'announcement'}, user_id=1),
-            Southafrica(title='Churrascaria Palace', comment='Had a great dining expirience and food was great', content={'type': 'announcement'}, user_id=2),
-            Southafrica(title='Piatto Farrarmare', comment='Unique food but tasted good.', content={'type': 'announcement'}, user_id=3),
+            Southafrica(title='Kilimanjaro', comment='It was ok! The enviornment was great though.', content={'type': 'announcement'}, user_id=1, group_id=1),
+            Southafrica(title='McFestine', comment='Enjoyed the diverse food options!', content={'type': 'announcement'}, user_id=2, group_id=2),
+            Southafrica(title='Unity', comment='Amazing staff, liked the food!', content={'type': 'announcement'}, user_id=3, group_id=3),
         ]
         
         for i in southafricas:
+            print(f"Attempting to create record: {repr(i)}")
             try:
                 i.create()
                 print(f"Record created: {repr(i)}")

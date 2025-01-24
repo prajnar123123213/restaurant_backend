@@ -3,6 +3,7 @@ from sqlite3 import IntegrityError
 from sqlalchemy import Text, JSON
 from __init__ import app, db
 from model.group import Group
+from model.nigeria import Nigeria
 
 class Channel(db.Model):
     """
@@ -58,22 +59,26 @@ class Channel(db.Model):
         """
         return self._name
 
-    def create(self):
+    def create_post(self, content, timestamp):
         """
-        The create method adds the object to the database and commits the transaction.
+        Creates a post in the nigerias table for this channel.
+
+        Args:
+            content (str): The content of the post.
+            timestamp (str): The timestamp of when the post is created.
         
-        Uses:
-            The db ORM methods to add and commit the transaction.
-        
-        Raises:
-            Exception: An error occurred when adding the object to the database.
+        Returns:
+            Nigeria: The created post object.
         """
+        post = Nigeria(channel_id=self.id, content=content, timestamp=timestamp)
         try:
-            db.session.add(self)
+            db.session.add(post)
             db.session.commit()
+            return post
         except Exception as e:
             db.session.rollback()
-            raise e
+            print(f"Error creating post: {e}")
+            return None
 
     def read(self):
         """
