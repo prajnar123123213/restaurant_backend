@@ -21,13 +21,11 @@ from api.pfp import pfp_api
 #from api.southAfrica import southafrica_api # type: ignore
 from api.nestImg import nestImg_api # Justin added this, custom format for his website
 from api.post import post_api
-from api.channel import channel_api
 from api.group import group_api
 from api.section import section_api
 from api.nestPost import nestPost_api # Justin added this, custom format for his website
 from api.messages_api import messages_api # Adi added this, messages for his website
 from api.carphoto import car_api
-from api.carChat import car_chat_api
 from api.student import student_api
 from api.africa import africa_api
 from api.ethiopia import ethiopia_api
@@ -45,11 +43,9 @@ from model.sandiego import Sandiego, initSandiegos
 from model.india import India, initIndias
 from model.japan import Japan, initJapans
 from model.china import China, initChinas
-from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
 from model.group import Group, initGroups
-from model.channel import Channel, initChannels
 from model.post import Post, initPosts
 from model.nigeria import Nigeria, initNigerias
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
@@ -62,10 +58,8 @@ app.register_blueprint(messages_api) # Adi added this, messages for his website
 app.register_blueprint(user_api)
 app.register_blueprint(pfp_api) 
 app.register_blueprint(post_api)
-app.register_blueprint(channel_api)
 app.register_blueprint(group_api)
 app.register_blueprint(section_api)
-app.register_blueprint(car_chat_api)
 app.register_blueprint(student_api)
 app.register_blueprint(africa_api)
 app.register_blueprint(ethiopia_api)
@@ -192,7 +186,6 @@ def generate_data():
     initUsers()
     initSections()
     initGroups()
-    initChannels()
     initPosts()
     initSandiegos()
     initJapans()
@@ -220,7 +213,6 @@ def extract_data():
         data['users'] = [user.read() for user in User.query.all()]
         data['sections'] = [section.read() for section in Section.query.all()]
         data['groups'] = [group.read() for group in Group.query.all()]
-        data['channels'] = [channel.read() for channel in Channel.query.all()]
         data['posts'] = [post.read() for post in Post.query.all()]
         data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
         data['japans'] = [japan.read() for japan in Japan.query.all()]
@@ -243,7 +235,7 @@ def save_data_to_json(data, directory='backup'):
 # Load data from JSON files
 def load_data_from_json(directory='backup'):
     data = {}
-    for table in ['users', 'sections', 'groups', 'channels', 'posts', 'sandeigos', 'japans', 'nigerias', 'southafricas', 'chinas', 'indias', 'ethiopias']:
+    for table in ['users', 'sections', 'groups', 'posts', 'sandeigos', 'japans', 'nigerias', 'southafricas', 'chinas', 'indias', 'ethiopias']:
         with open(os.path.join(directory, f'{table}.json'), 'r') as f:
             data[table] = json.load(f)
     return data
@@ -254,7 +246,6 @@ def restore_data(data):
         users = User.restore(data['users'])
         _ = Section.restore(data['sections'])
         _ = Group.restore(data['groups'], users)
-        _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
         _ = Sandiego.restore(data['sandiegos'])
         _ = Japan.restore(data['japans'])

@@ -5,7 +5,7 @@ from datetime import datetime
 from __init__ import app
 from api.jwt_authorize import token_required
 from model.post import Post
-from model.channel import Channel
+from model.nigeria import Nigeria
 
 """
 This Blueprint object is used to define APIs for the Post model.
@@ -49,13 +49,13 @@ class PostAPI:
                 return {'message': 'Post title is required'}, 400
             if 'comment' not in data:
                 return {'message': 'Post comment is required'}, 400
-            if 'channel_id' not in data:
-                return {'message': 'Channel ID is required'}, 400
+            if 'nigeria_id' not in data:
+                return {'message': 'Nigeria ID is required'}, 400
             if 'content' not in data:
                 data['content'] = {}
 
             # Create a new post object using the data from the request
-            post = Post(data['title'], data['comment'], current_user.id, data['channel_id'], data['content'])
+            post = Post(data['title'], data['comment'], current_user.id, data['nigeria_id'], data['content'])
             # Save the post object using the Object Relational Mapper (ORM) method defined in the model
             post.create()
             # Return response to the client in JSON format, converting Python dictionaries to JSON format
@@ -97,7 +97,7 @@ class PostAPI:
             # Update the post
             post._title = data['title']
             post._content = data['content']
-            post._channel_id = data['channel_id']
+            post._nigeria_id = data['nigeria_id']
             # Save the post
             post.update()
             # Return response
@@ -186,11 +186,11 @@ class PostAPI:
             data = request.get_json()
             if data is None:
                 return {'message': 'Channel and User data not found'}, 400
-            if 'channel_id' not in data:
+            if 'nigeria_id' not in data:
                 return {'message': 'Channel ID not found'}, 400
             
             # Find all posts by channel ID and user ID
-            posts = Post.query.filter_by(_channel_id=data['channel_id']).all()
+            posts = Post.query.filter_by(_nigeria_id=data['nigeria_id']).all()
             # Prepare a JSON list of all the posts, using list comprehension
             json_ready = [post.read() for post in posts]
             # Return a JSON list, converting Python dictionaries to JSON format

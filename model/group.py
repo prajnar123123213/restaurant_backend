@@ -28,7 +28,6 @@ class Group(db.Model):
     _name = db.Column(db.String(255), unique=True, nullable=False)
     _section_id = db.Column(db.Integer, db.ForeignKey('sections.id'), nullable=False)
 
-    channels = db.relationship('Channel', backref='group', lazy=True)
     moderators = db.relationship('User', secondary=group_moderators, lazy='subquery',
                                  backref=db.backref('moderated_groups', lazy=True))
     
@@ -195,6 +194,7 @@ def initGroups():
             Group(name='Zoom n Guess', section_id=create_and_compete_section.id, moderators=[User.query.get(1)]),
             Group(name='Culinary Posts', section_id=create_and_compete_section.id, moderators=[User.query.get(1)]),
             Group(name='Riddle Room', section_id=create_and_compete_section.id, moderators=[User.query.get(1)]),
+            Group(name='Nigeria', section_id=create_and_compete_section.id, moderators=[User.query.get(1)]),
         ]
         
         # Share and Care Groups
