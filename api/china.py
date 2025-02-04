@@ -24,20 +24,20 @@ class ChinaAPI:
     class _West_Lake_Restaurant(Resource):
         def get(self):
             # Use the helper method to get Jeff's details
-            West_Lake_Restaurant_details = ChinaAPI.get_chinese("West_Lake_Restaurant")
-            return jsonify(West_Lake_Restaurant_details)
+            west_lake_restaurant_details = ChinaAPI.get_chinese("West Lake Restaurant")
+            return jsonify(west_lake_restaurant_details)
         
     class _Silk_Road_Cuisine(Resource):
         def get(self):
             # Use the helper method to get Jeff's details
-            Silk_Road_Cuisine_details = ChinaAPI.get_chinese("Silk_Road_Cuisine")
-            return jsonify(Silk_Road_Cuisine_details)
+            silk_road_cuisine_details = ChinaAPI.get_chinese("Silk Road Cuisine")
+            return jsonify(silk_road_cuisine_details)
         
     class _Bulk(Resource):
         def get(self):
             # Use the helper method to get both John's and Jeff's details
-            West_Lake_Restaurant_details = ChinaAPI.get_chinese("West_Lake_Restaurant")
-            Silk_Road_Cuisine_details = ChinaAPI.get_chinese("Silk_Road_Cuisine")
+            West_Lake_Restaurant_details = ChinaAPI.get_chinese("West Lake Restaurant")
+            Silk_Road_Cuisine_details = ChinaAPI.get_chinese("Silk Road Cuisine")
             return jsonify({"chinese": [West_Lake_Restaurant_details, Silk_Road_Cuisine_details]})
 
     # Building REST API endpoints
