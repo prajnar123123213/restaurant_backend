@@ -180,18 +180,18 @@ def initNigerias():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        nigerias = [
+        nigeria_restaurants = [
             Nigeria(title='Kilimanjaro', comment='It was ok! The enviornment was great though.', content={'type': 'announcement'}, user_id=1),
             Nigeria(title='McFestine', comment='Enjoyed the diverse food options!', content={'type': 'announcement'}, user_id=2),
             Nigeria(title='Unity', comment='Amazing staff, liked the food!', content={'type': 'announcement'}, user_id=3),
         ]
         
-        for i in nigerias:
-            print(f"Attempting to create record: {repr(i)}")
+        for restaurant in nigeria_restaurants:
+            print(f"Attempting to create record: {repr(restaurant)}")
             try:
-                i.create()
-                print(f"Record created: {repr(i)}")
+                restaurant.create()
+                print(f"Record created: {repr(restaurant)}")
             except IntegrityError:
                 '''fails with bad or duplicate data'''
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {i._title}")
+                print(f"Records exist, duplicate email, or error: {restaurant._title}")
