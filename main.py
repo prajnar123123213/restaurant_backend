@@ -42,17 +42,17 @@ from api.chile import chile_api
 from api.vote import vote_api
 # database Initialization functions
 from model.southafrica import Southafrica, initSouthafricas
-from model.sandiego import initSandiegos
-from model.india import initIndias
-from model.japan import initJapans
-from model.china import initChinas
+from model.sandiego import Sandiego, initSandiegos
+from model.india import India, initIndias
+from model.japan import Japan, initJapans
+from model.china import China, initChinas
 from model.carChat import CarChat
 from model.user import User, initUsers
 from model.section import Section, initSections
 from model.group import Group, initGroups
 from model.channel import Channel, initChannels
 from model.post import Post, initPosts
-from model.nigeria import initNigerias
+from model.nigeria import Nigeria, initNigerias
 #from model.southafrica import Southafrica, initSouthafricas
 from model.nestPost import NestPost, initNestPosts # Justin added this, custom format for his website
 from model.vote import Vote, initVotes
@@ -219,7 +219,12 @@ def extract_data():
         data['sections'] = [section.read() for section in Section.query.all()]
         data['groups'] = [group.read() for group in Group.query.all()]
         data['channels'] = [channel.read() for channel in Channel.query.all()]
-        data['posts'] = [post.read() for post in Post.query.all()]
+        data['japans'] = [japan.read() for japan in Japan.query.all()]
+        data['chinas'] = [china.read() for china in China.query.all()]
+        data['indias'] = [india.read() for india in India.query.all()]
+        data['sandiegos'] = [sandiego.read() for sandiego in Sandiego.query.all()]
+        data['nigerias'] = [nigeria.read() for nigeria in Nigeria.query.all()]
+        data['southafricas'] = [southafrica.read() for southafrica in Southafrica.query.all()]
     return data
 
 # Save extracted data to JSON files
@@ -247,6 +252,12 @@ def restore_data(data):
         _ = Group.restore(data['groups'], users)
         _ = Channel.restore(data['channels'])
         _ = Post.restore(data['posts'])
+        _ = Japan.restore(data['japans'])
+        _ = China.restore(data['chinas'])
+        _ = India.restore(data['indias'])
+        _ = Southafrica.restore(data['southafricas'])
+        _ = Sandiego.restore(data['sandiegos'])
+        _ = Nigeria.restore(data['nigerias'])
     print("Data restored to the new database.")
 
 # Define a command to backup data
@@ -268,4 +279,4 @@ app.cli.add_command(custom_cli)
 # this runs the flask application on the development server
 if __name__ == "__main__":
     # change name for testing
-    app.run(debug=True, host="0.0.0.0", port="8887")
+    app.run(debug=True, host="0.0.0.0", port="8205")
