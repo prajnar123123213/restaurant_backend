@@ -9,7 +9,11 @@ server {
         # Preflighted requests
         if ($request_method = OPTIONS) {
             add_header "Access-Control-Allow-Credentials" "true" always;
+<<<<<<< HEAD
+            add_header "Access-Control-Allow-Origin"  "https://nighthawkcoders.github.io" always;
+=======
             add_header "Access-Control-Allow-Origin"  "restaurant.stu.nighthawkcodingsociety.com" always;
+>>>>>>> 27ed76a0e3de1d76bc1d1b0d96eae9b3025d72f7
             add_header "Access-Control-Allow-Methods" "GET, POST, PUT, DELETE, OPTIONS, HEAD" always;
             add_header "Access-Control-Allow-MaxAge" 600 always;
             add_header "Access-Control-Allow-Headers" "Authorization, Origin, X-Origin, X-Requested-With, Content-Type, Accept" always;
