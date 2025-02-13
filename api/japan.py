@@ -27,7 +27,7 @@ class JapanAPI:
         def get(self):
             # Use the helper method to get both John's and Jeff's details
             Hakumaru_details =JapanAPI.get_japanese("Hakumaru")
-            return jsonify({"japanese": [Hakumaru_details]})
+            return jsonify({"japanese": [Hakumar_details]})
 
     # Building REST API endpoints
     api.add_resource(_Hakumaru, '/japanese/hakumaru')
